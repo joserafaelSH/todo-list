@@ -34,6 +34,13 @@ functions:
           path: /api/v1/todos
           method: get
 
+  getTodoById:
+    handler: ./src/handlers/todos/get_todo_by_id.handler
+    events:
+      - httpApi:
+          path: /api/v1/todo/{id}
+          method: get
+
   updateTodo:
     handler: ./src/handlers/todos/update_todo.handler
     events:
