@@ -8,7 +8,7 @@ export const updateTodoService = async (
 ): Promise<void> => {
   try {
     const currentTodo = await DYNAMODB.getTodoById(id);
-    if (!currentTodo.Item) {
+    if (!currentTodo || currentTodo.Count === 0 || !currentTodo.Items) {
       throw new Error("Todo not found");
     }
 
@@ -18,16 +18,20 @@ export const updateTodoService = async (
 
     const newTodo = new Todo(
       {
-        created_at: new Date(currentTodo.Item.created_at),
+        created_at: new Date(currentTodo.Items[0].created_at),
         description: input.description,
         status: input.status,
         title: input.title,
-        userId: currentTodo.Item.userId,
+        userId: currentTodo.Items[0].userId,
       },
-      currentTodo.Item.id
+      currentTodo.Items[0].id
     );
 
-    await DYNAMODB.updateTodo(id, newTodo.toObject(), currentTodo.Item.userId);
+    await DYNAMODB.updateTodo(
+      id,
+      newTodo.toObject(),
+      currentTodo.Items[0].userId
+    );
   } catch (error) {
     throw new Error(error.message);
   }

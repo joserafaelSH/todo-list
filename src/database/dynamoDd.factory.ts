@@ -4,6 +4,7 @@ import {
   GetCommandOutput,
   PutCommand,
   ScanCommand,
+  ScanCommandOutput,
 } from "@aws-sdk/lib-dynamodb";
 import { CreateUserDto, TodoStatus } from "../dtos";
 import {
@@ -125,6 +126,7 @@ export const DYNAMODB = {
       TableName: TODO_TABLE,
       Item: {
         ...todo,
+        id: todoId,
         userId: userId,
       },
     });
@@ -143,14 +145,17 @@ export const DYNAMODB = {
     return response;
   },
 
-  getTodoById: async (todoId: string): Promise<GetCommandOutput> => {
-    const command = new GetCommand({
+  getTodoById: async (todoId: string): Promise<ScanCommandOutput> => {
+    const command = new ScanCommand({
       TableName: TODO_TABLE,
-      Key: {
-        id: todoId,
+      FilterExpression: "#id = :id",
+      ExpressionAttributeNames: {
+        "#id": "id",
+      },
+      ExpressionAttributeValues: {
+        ":id": todoId,
       },
     });
-
     const response = await client.send(command);
     return response;
   },

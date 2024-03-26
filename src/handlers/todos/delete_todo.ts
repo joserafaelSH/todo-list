@@ -50,6 +50,7 @@ export const handler = async (event: APIGatewayEvent) => {
       body: JSON.stringify(
         {
           message: "Todo deleted successfully",
+          id: todoId,
         },
         null,
         2
@@ -64,6 +65,7 @@ export const handler = async (event: APIGatewayEvent) => {
       body: JSON.stringify(
         {
           message: "Error deleting todo",
+
           error: error.message,
         },
         null,
