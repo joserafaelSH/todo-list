@@ -1,0 +1,63 @@
+service: todo-list-app
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+
+functions:
+  createUser:
+    handler: ./src/handlers/users/create_user.handler
+    events:
+      - httpApi:
+          path: /api/v1/user
+          method: post
+
+  getAllUsers:
+    handler: ./src/handlers/users/get_all_users.handler
+    events:
+      - httpApi:
+          path: /api/v1/users
+          method: get
+
+  createTodo:
+    handler: ./src/handlers/todos/create_todo.handler
+    events:
+      - httpApi:
+          path: /api/v1/todo
+          method: post
+
+  getAllTodos:
+    handler: ./src/handlers/todos/get_all_todos.handler
+    events:
+      - httpApi:
+          path: /api/v1/todos
+          method: get
+
+  updateTodo:
+    handler: ./src/handlers/todos/update_todo.handler
+    events:
+      - httpApi:
+          path: /api/v1/todo/{id}
+          method: put
+
+  deleteTodo:
+    handler: ./src/handlers/todos/delete_todo.handler
+    events:
+      - httpApi:
+          path: /api/v1/todo/{id}
+          method: delete
+
+  auth:
+    handler: ./src/handlers/auth/auth.handler
+    events:
+      - httpApi:
+          path: /api/v1/auth
+          method: post
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
+
+package:
+  excludeDevDependencies: true
