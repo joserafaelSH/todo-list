@@ -90,3 +90,7 @@ serverless offline
 ```
 
 To learn more about the capabilities of `serverless-offline`, please refer to its [GitHub repository](https://github.com/dherault/serverless-offline).
+
+
+
+Doc: https://documenter.getpostman.com/view/33125558/2sA35D64HX#b0bca5b9-6a4a-4b04-9283-4feb01e9dd43

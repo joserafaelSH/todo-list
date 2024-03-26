@@ -8,6 +8,9 @@ export const handler = async (event: APIGatewayEvent) => {
     const userId = await getUserIdFromJwt(event);
     if (userId === "") {
       return {
+        headers: {
+          "Content-Type": "application/json",
+        },
         statusCode: 401,
         body: JSON.stringify(
           {
@@ -24,6 +27,9 @@ export const handler = async (event: APIGatewayEvent) => {
     await createTodoService(parsedBody, userId);
 
     return {
+      headers: {
+        "Content-Type": "application/json",
+      },
       statusCode: 200,
       body: JSON.stringify(
         {
@@ -35,6 +41,9 @@ export const handler = async (event: APIGatewayEvent) => {
     };
   } catch (error) {
     return {
+      headers: {
+        "Content-Type": "application/json",
+      },
       statusCode: 500,
       body: JSON.stringify(
         {

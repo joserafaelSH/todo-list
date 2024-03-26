@@ -150,6 +150,7 @@ export const DYNAMODB = {
         id: todoId,
       },
     });
+
     const response = await client.send(command);
     return response;
   },
